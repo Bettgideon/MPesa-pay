@@ -1,15 +1,24 @@
-document.getElementById("acceptButton").addEventListener("click", function() {
-    var amount = document.getElementById("amountInput").value;
+document.getElementById("amountInput").addEventListener("input", function() {
+    var amount = parseInt(this.value);
+    if (!isNaN(amount) && amount >= 200) {
+        document.getElementById("acceptButton").style.display = "block";
+    } else {
+        document.getElementById("acceptButton").style.display = "none";
+    }
+});
 
-    if (amount.trim() === "" || parseInt(amount) < 200) {
+document.getElementById("acceptButton").addEventListener("click", function() {
+    var amount = parseInt(document.getElementById("amountInput").value);
+
+    if (isNaN(amount) || amount < 200) {
         alert("Please enter a valid amount of at least 200 KES.");
         return;
     }
 
     var pin = prompt("Please enter your M-Pesa PIN to confirm payment of KES " + amount + " to 0790729721");
-    
-    if (pin === null || pin === "") {
-        alert("Payment cancelled.");
+
+    if (pin === null || pin.trim() === "") {
+        alert("Payment cancelled or PIN not provided.");
         return;
     }
 
